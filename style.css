@@ -64,8 +64,6 @@
 }
 
 .container>div:first-child>input{
-    appearance: none;
-    -webkit-appearance: none;
     border: none;
     width: clamp(100px,50%,200px);
     height: 25px;
