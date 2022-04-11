@@ -5,13 +5,16 @@ const mainContainer=(function(){
     const specialTime=document.querySelector('.container>div:first-child>input[type="time"]')
     const startCountingBtn=document.querySelector('.startBtn');
     const invalidMsg=document.querySelector('.invalidMsg')
-
     const firstPage=document.querySelector('.firstPage');
+
     const secondPage=document.querySelector('.secondPage');
     const hourDisplay=document.querySelector('.timeCountDisplay>div:nth-child(1)');
     const minuteDisplay=document.querySelector('.timeCountDisplay>div:nth-child(2)');
     const secondDisplay=document.querySelector('.timeCountDisplay>div:nth-child(3)');
     const dayDisplay=document.querySelector('.dayCountDisplay')
+    const imgInput=document.querySelectorAll('.image input');
+    const firstImage=document.querySelectorAll('.image>div');
+
     // bind Events
     startCountingBtn.addEventListener('click',()=>{
         // check validity
@@ -58,4 +61,36 @@ const mainContainer=(function(){
             secondDisplay.textContent=` ${seconds} ${seconds>1?'seconds':'second'}`
         },1000)
     }
+
+    for(let i=0;i<imgInput.length;i++){
+        if(localStorage.getItem('person'+ (i+1))){
+            imgInput[i].parentElement.style.backgroundImage=`url(${localStorage.getItem('person'+ (i+1))})`
+        }
+    }
+    
+    // input to change image
+    for(let i=0;i<imgInput.length;i++){
+        imgInput[i].parentElement.style.height=imgInput[i].parentElement.offsetWidth + 'px'
+        imgInput[i].addEventListener('change',(event)=>{
+            let file=event.target.files[0];
+            const reader = new FileReader();
+    
+            reader.addEventListener("load", function () {
+                // convert image file to base64 string and save to localStorage
+                localStorage.setItem("person"+ ++i, reader.result);
+            }, false);
+    
+            if(file){
+                reader.readAsDataURL(file);
+            }
+            
+            imgInput[i].parentNode.style.backgroundImage=`url(${URL.createObjectURL(file)})`;
+        })
+    }
+
+    window.addEventListener('resize',()=>{
+        imgInput.forEach((input)=>{
+            input.parentElement.style.height=input.parentElement.offsetWidth + 'px'
+        })
+    })
 })();
