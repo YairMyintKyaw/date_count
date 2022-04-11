@@ -1,0 +1,92 @@
+@import url(https://fontlibrary.org//face/love-me-chain-v2-monospaced);
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --bg-color:#ffe4f3;
+    --text-color:#ffc8fb;
+    --inner-container-color:#ff92c2;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: var(--bg-color);
+}
+
+.container > div:first-child,.secondPage{
+    width: clamp(300px,80%,800px);
+    height: clamp(400px,50%,500px);
+    background-color: var(--inner-container-color);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 2rem;
+    font-family: 'LoveMeChainV2MonoLight'; 
+    text-align: center;
+    user-select: none;
+
+}
+
+.secondPage{
+    height: fit-content;
+    padding: 20px 20px;
+    display: none;
+}
+
+.secondPage>div:last-child{
+    background-color: #ffc8fb;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 100%;
+    font-size: calc(1rem + 1vmin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.secondPage>div:last-child>div{
+    flex-shrink: 0;
+}
+
+.container>div:first-child>input{
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    width: clamp(100px,50%,200px);
+    height: 25px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.container>div:first-child>button{
+    font-family: inherit;
+    font-size: 1rem;
+
+    padding: 10px 20px;
+    cursor: pointer;
+
+    width: clamp(100px,80%,300px);
+}
+
+.invalidMsg{
+    font-size: .8rem;
+    color: red;
+}
+
