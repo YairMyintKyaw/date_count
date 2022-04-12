@@ -5,25 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Count</title>
+    <script src="https://kit.fontawesome.com/a08f5d80e5.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="firstPage">
-            <!-- <div>What is the first day of your relationship?</div> -->
+            <div>What is the first day of your relationship?</div>
             <div class="invalidMsg"></div>
-            <input type="date" required>
-            <input type="time" required>
-            <button type="button" class="startBtn">Start </button>
-            <!-- an amazing journy with your partner -->
+            <label for="date">Date</label>
+            <input type="date" id="date" required>
+            <label for="time">Time</label>
+            <input type="time" id="time" required>
+            <button type="button" class="startBtn">Start an amazing journy with your partner</button>
+            
         </div>
         <div class="secondPage">
-            <div class="image">
+            <div title="heart break?">
+                <i class="fas fa-heart-broken"></i>?
+            </div>
+            <div class="popUp">
                 <div>
-                    <input type="file" accept="image/*">
+                    <div>Do you really want to end this relationship?</div>
+                    <div>Love is as rare as sun light at night.</div>
+                    <div>
+                        <button>Break this shit!</button>
+                        <button>I'm still falling in love</button>
+                    </div>
                 </div>
-                <div>
-                    <input type="file" accept="image/*">
+            </div>
+            <div class="image">
+                <div title="Do not let your lover down!">
+                    <div class="firstPhoto"><input type="file" accept="image/*" ></div>
+                    <div>
+                        <input type="text" placeholder="Name..?">
+                        <div>Lover</div>
+                    </div>
+                </div>
+                <div><span class="iconify" data-icon="mdi:heart-multiple"></span></div>
+                <div title="Do not let your lover down!">
+                    <div class="secondPhoto"><input type="file" accept="image/*"></div>
+                    <div>
+                        <input type="text" placeholder="Name..?">
+                        <div>Lover</div>
+                    </div>
                 </div>
             </div>
             <div class="dayCountDisplay"></div>
@@ -35,6 +60,7 @@
         </div>
     </div>
     
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

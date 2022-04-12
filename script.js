@@ -12,9 +12,16 @@ const mainContainer=(function(){
     const minuteDisplay=document.querySelector('.timeCountDisplay>div:nth-child(2)');
     const secondDisplay=document.querySelector('.timeCountDisplay>div:nth-child(3)');
     const dayDisplay=document.querySelector('.dayCountDisplay')
-    const imgInput=document.querySelectorAll('.image input');
-    const firstImage=document.querySelectorAll('.image>div');
-
+    const imgInput=document.querySelectorAll('.image>div>div:first-child>input');
+    const nameInput=document.querySelectorAll('.image>div>div>input[type="text"]');
+    const names=document.querySelectorAll('.image>div>div>div:last-child');
+    const endBtn=document.querySelector('.secondPage>div:first-child');
+    const confirmDiv=document.querySelector('.popUp');
+    const confirmBtn=document.querySelector('.popUp button:first-child');
+    const cancelBtn=document.querySelector('.popUp button:last-child');
+    const heartIcon=document.querySelector('.fa-heart-broken')
+    const defaultPhoto=['male.jpg','female.jpg'];
+    
     // bind Events
     startCountingBtn.addEventListener('click',()=>{
         // check validity
@@ -62,9 +69,13 @@ const mainContainer=(function(){
         },1000)
     }
 
+    // Background image
     for(let i=0;i<imgInput.length;i++){
         if(localStorage.getItem('person'+ (i+1))){
             imgInput[i].parentElement.style.backgroundImage=`url(${localStorage.getItem('person'+ (i+1))})`
+        }
+        else{
+            imgInput[i].parentElement.style.backgroundImage=`url(${defaultPhoto[i]})`;
         }
     }
     
@@ -77,7 +88,7 @@ const mainContainer=(function(){
     
             reader.addEventListener("load", function () {
                 // convert image file to base64 string and save to localStorage
-                localStorage.setItem("person"+ ++i, reader.result);
+                localStorage.setItem("person"+ (i+1), reader.result);
             }, false);
     
             if(file){
@@ -88,9 +99,68 @@ const mainContainer=(function(){
         })
     }
 
+    // name input
+    for(let i=0;i<nameInput.length;i++){
+        if(localStorage.getItem('name'+i)){
+            names[i].style.display='inline-block';
+            names[i].textContent=localStorage.getItem(`name`+i)
+            nameInput[i].style.display='none'
+        }else{
+            names[i].style.display='none';
+        }
+
+        // bind event
+        nameInput[i].addEventListener('input',(e)=>{
+            names[i].textContent=e.target.value;
+            localStorage.setItem('name'+i,e.target.value)
+        })
+        nameInput[i].addEventListener('change',()=>{
+            nameInput[i].style.display='none';
+            names[i].style.display='inline-block';
+        })
+        names[i].addEventListener('click',()=>{
+            names[i].style.display='none';
+            nameInput[i].style.display='inline-block'
+            nameInput[i].value=names[i].textContent
+        })
+    }
+
+    // end relationship
+    confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`
+    endBtn.addEventListener('click',()=>{
+        confirmDiv.style.top=0;
+    })
+    confirmBtn.addEventListener('click',()=>{
+        localStorage.clear();
+        secondPage.style.display='none';
+        firstPage.style.display='flex'
+    })
+    cancelBtn.addEventListener('click',()=>{
+        confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`;
+    })
+
+    // hide the name input
+    window.addEventListener('click',(e)=>{
+        for(let i=0;i<nameInput.length;i++){
+            if(e.target==nameInput[i] || e.target==names[i]){
+                return
+            }
+            nameInput[i].style.display='none';
+            names[i].style.display='inline-block';
+        }
+
+        if(e.target==endBtn || e.target==heartIcon){
+            return
+        }else{
+            confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`
+        }
+    })
+
     window.addEventListener('resize',()=>{
         imgInput.forEach((input)=>{
             input.parentElement.style.height=input.parentElement.offsetWidth + 'px'
         })
+        confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`
+
     })
 })();
