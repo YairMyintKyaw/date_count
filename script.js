@@ -7,6 +7,7 @@ const mainContainer=(function(){
     const invalidMsg=document.querySelector('.invalidMsg')
     const firstPage=document.querySelector('.firstPage');
 
+    // second page
     const secondPage=document.querySelector('.secondPage');
     const hourDisplay=document.querySelector('.timeCountDisplay>div:nth-child(1)');
     const minuteDisplay=document.querySelector('.timeCountDisplay>div:nth-child(2)');
@@ -15,13 +16,16 @@ const mainContainer=(function(){
     const imgInput=document.querySelectorAll('.image>div>div:first-child>input');
     const nameInput=document.querySelectorAll('.image>div>div>input[type="text"]');
     const names=document.querySelectorAll('.image>div>div>div:last-child');
+    const iconBetweenPhoto=document.querySelector('.iconBetweenPhoto');
+    // element to choose time again
     const endBtn=document.querySelector('.secondPage>div:first-child');
     const confirmDiv=document.querySelector('.popUp');
     const confirmBtn=document.querySelector('.popUp button:first-child');
     const cancelBtn=document.querySelector('.popUp button:last-child');
     const heartIcon=document.querySelector('.fa-heart-broken')
-    const defaultPhoto=['male.jpg','female.jpg'];
     
+    const defaultPhoto=['male.jpg','female.jpg'];
+    const iconList=['bi:heart-pulse-fill','bi:arrow-through-heart','bi:balloon-heart','el:heart-alt','twemoji:heart-on-fire']
     // bind Events
     startCountingBtn.addEventListener('click',()=>{
         // check validity
@@ -99,6 +103,8 @@ const mainContainer=(function(){
         })
     }
 
+    // random icons to be shown
+    iconBetweenPhoto.setAttribute('data-icon',iconList[Math.floor(Math.random()*iconList.length)]);
     // name input
     for(let i=0;i<nameInput.length;i++){
         if(localStorage.getItem('name'+i)){
