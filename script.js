@@ -26,6 +26,8 @@ const mainContainer=(function(){
     
     const defaultPhoto=['male.jpg','female.jpg'];
     const iconList=['bi:heart-pulse-fill','bi:arrow-through-heart','bi:balloon-heart','el:heart-alt','twemoji:heart-on-fire']
+    
+    let timeCount; //for setIntervel
     // bind Events
     startCountingBtn.addEventListener('click',()=>{
         // check validity
@@ -49,28 +51,27 @@ const mainContainer=(function(){
             invalidMsg.textContent='Data is nedded to be filled'
         }
     })
-
     if(localStorage.getItem('specialDate')){
         firstPage.style.display='none';
         secondPage.style.display='flex'
         runningTime(JSON.parse(localStorage.getItem('specialDate')))
     }
-
+    
     function runningTime(timeobj){
         let days, hours, minutes, seconds;
         let time=new Date(+timeobj.year,+timeobj.month,+timeobj.date,+timeobj.hour,+timeobj.minute);
-        setInterval(()=>{
-            let duration= (new Date().getTime() - time.getTime())/1000;
-            days=Math.floor(duration/86400);
-            hours=Math.floor((duration%86400)/3600);
-            minutes=Math.floor(((duration%86400)%3600)/60);
-            seconds=Math.floor(((duration%86400)%3600)%60);
-            
-            dayDisplay.textContent=days+` ${days>1?'days':'day'}`
-            hourDisplay.textContent=`${hours} ${hours>1?'hours':'hour'} :`;
-            minuteDisplay.textContent=` ${minutes} ${minutes>1?'minutes':'minute'} :`;
-            secondDisplay.textContent=` ${seconds} ${seconds>1?'seconds':'second'}`
-        },1000)
+        timeCount=setInterval(()=>{
+                        let duration= (new Date().getTime() - time.getTime())/1000;
+                        days=Math.floor(duration/86400);
+                        hours=Math.floor((duration%86400)/3600);
+                        minutes=Math.floor(((duration%86400)%3600)/60);
+                        seconds=Math.floor(((duration%86400)%3600)%60);
+                        
+                        dayDisplay.textContent=days+` ${days>1?'days':'day'}`
+                        hourDisplay.textContent=`${hours} ${hours>1?'hours':'hour'} :`;
+                        minuteDisplay.textContent=` ${minutes} ${minutes>1?'minutes':'minute'} :`;
+                        secondDisplay.textContent=` ${seconds} ${seconds>1?'seconds':'second'}`
+                    },1000)
     }
 
     // Background image
@@ -132,14 +133,18 @@ const mainContainer=(function(){
     }
 
     // end relationship
-    confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`
+    window.addEventListener('load',()=>{
+        confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`
+    })
     endBtn.addEventListener('click',()=>{
         confirmDiv.style.top=0;
     })
     confirmBtn.addEventListener('click',()=>{
         localStorage.clear();
+        clearInterval(timeCount)
         secondPage.style.display='none';
-        firstPage.style.display='flex'
+        firstPage.style.display='flex';
+        
     })
     cancelBtn.addEventListener('click',()=>{
         confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`;
@@ -166,7 +171,6 @@ const mainContainer=(function(){
         imgInput.forEach((input)=>{
             input.parentElement.style.height=input.parentElement.offsetWidth + 'px'
         })
-        confirmDiv.style.top=`-${confirmDiv.offsetHeight}px`
-
+        confirmDiv.style.top=`-${document.body.offsetHeight}px`
     })
 })();
